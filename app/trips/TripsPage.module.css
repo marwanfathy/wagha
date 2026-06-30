@@ -1,0 +1,130 @@
+.main {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+.wrapper {
+  padding: 120px 48px 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 100px 24px 48px;
+  }
+}
+
+.pageSubtitle {
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 40px;
+}
+
+.pageTitle {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 480px) {
+  .pageTitle {
+    font-size: 24px;
+  }
+  .pageSubtitle {
+    margin-bottom: 24px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .cardImageWrap {
+    height: 160px;
+  }
+  .cardBody {
+    padding: 14px;
+  }
+  .cardTitle {
+    font-size: 16px;
+  }
+  .cardPrice {
+    font-size: 14px;
+  }
+}
+
+.emptyText {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.card {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 15, 15, 0.5);
+  transition: border-color 0.2s;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.cardImageWrap {
+  height: 200px;
+  position: relative;
+}
+
+.cardCountryBadge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cardBody {
+  padding: 20px;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.cardDescription {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardPrice {
+  font-size: 16px;
+  font-weight: 700;
+  color: #34d399;
+}
+
+.cardLocation {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}

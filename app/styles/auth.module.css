@@ -1,0 +1,353 @@
+@keyframes auth-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animateFadeIn {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.authPage {
+  align-items: center;
+  background: radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.08), transparent 60%), #000000;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 140px 24px 64px;
+}
+
+.authCard {
+  background-color: var(--glass-bg, rgba(15, 15, 15, 0.185));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+  border-radius: 24px;
+  padding: 40px;
+  width: 100%;
+  max-width: 440px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 480px) {
+  .authCard {
+    padding: 28px;
+  }
+}
+
+.authCardWide {
+  max-width: 560px;
+}
+
+.authTitle {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 480px) {
+  .authTitle {
+    font-size: 22px;
+  }
+  .authSubtitle {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+  .authPage {
+    padding: 120px 16px 48px;
+  }
+}
+
+.authSubtitle {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.authFieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.authLabel {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.authInput {
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 15px;
+  padding: 13px 16px;
+  transition: border-color 150ms ease, background-color 150ms ease;
+  width: 100%;
+}
+
+.authInput::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.authInput:focus {
+  background-color: rgba(255, 255, 255, 0.07);
+  border-color: var(--glass-border-hover, rgba(255, 255, 255, 0.2));
+  outline: none;
+}
+
+.authInputError {
+  border-color: rgba(248, 113, 113, 0.6);
+}
+
+.authErrorText {
+  color: #f87171;
+  font-size: 12px;
+}
+
+.passwordWrap {
+  position: relative;
+  width: 100%;
+}
+
+.authInputPw {
+  padding-right: 44px;
+}
+
+.pwToggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 150ms ease;
+}
+
+.pwToggle:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.authRowTwo {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 480px) {
+  .authRowTwo {
+    grid-template-columns: 1fr;
+  }
+}
+
+.authSubmitBtn {
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  color: #000000;
+  display: flex;
+  font-size: 15px;
+  font-weight: 600;
+  justify-content: center;
+  padding: 13px 24px;
+  transition: background-color 150ms ease, opacity 150ms ease;
+  width: 100%;
+}
+
+.authSubmitBtn:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.authSubmitBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.authGhostBtn {
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+  border-radius: 9999px;
+  color: #ffffff;
+  display: flex;
+  font-size: 15px;
+  font-weight: 500;
+  justify-content: center;
+  padding: 13px 24px;
+  transition: background-color 150ms ease, border-color 150ms ease;
+  width: 100%;
+}
+
+.authGhostBtn:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: var(--glass-border-hover, rgba(255, 255, 255, 0.2));
+}
+
+.authStepActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.authBannerError {
+  background-color: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 12px;
+  color: #f87171;
+  font-size: 13px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+}
+
+.authFooterText {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  margin-top: 28px;
+  text-align: center;
+}
+
+.authFooterLink {
+  color: var(--color-accent, #34d399);
+  font-weight: 600;
+}
+
+.authFooterLink:hover {
+  filter: brightness(1.1);
+}
+
+.authStepIndicator {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.authStepDot {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  flex: 1;
+  height: 4px;
+  transition: background-color 300ms ease;
+}
+
+.authStepDotActive,
+.authStepDotDone {
+  background-color: var(--color-accent, #34d399);
+}
+
+.idUploadGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 480px) {
+  .idUploadGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.idUploadZone {
+  align-items: center;
+  aspect-ratio: 16 / 10;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1.5px dashed var(--glass-border, rgba(255, 255, 255, 0.1));
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.idUploadZone:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--glass-border-hover, rgba(255, 255, 255, 0.2));
+}
+
+.idUploadZoneFilled {
+  border-style: solid;
+  padding: 0;
+}
+
+.idUploadZoneError {
+  border-color: rgba(248, 113, 113, 0.5);
+}
+
+.idUploadIcon {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.idUploadLabel {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0 12px;
+}
+
+.idUploadPreview {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.idUploadRemoveBtn {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 9999px;
+  display: flex;
+  height: 28px;
+  justify-content: center;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  width: 28px;
+  z-index: 2;
+}
+
+.idUploadRemoveBtn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.idUploadInput {
+  display: none;
+}
+
+.idUploadCaption {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.idUploadUploadingOverlay {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+}
+
+.loaderSpinner {
+  animation: auth-spin 0.9s linear infinite;
+}

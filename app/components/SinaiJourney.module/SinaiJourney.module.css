@@ -1,0 +1,195 @@
+.mainContainer {
+  background-color: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* --- Hero Section --- */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.heroLabel {
+  color: #34d399;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.heroTitle {
+  font-size: clamp(4rem, 15vw, 10rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  margin: 0;
+}
+
+.heroDot {
+  color: #34d399;
+}
+
+/* --- Program Journey Sections --- */
+.stepSection {
+  display: flex;
+  min-height: 100vh;
+  padding: 0 5%;
+  gap: 4rem;
+}
+
+.imageSide {
+  flex: 1;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 70vh;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.stepImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.8s ease;
+}
+
+.imageWrapper:hover .stepImage {
+  filter: grayscale(0%);
+}
+
+.textSide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 20vh;
+}
+
+.dayNumber {
+  font-size: 5rem;
+  font-weight: 900;
+  opacity: 0.1;
+  margin-bottom: -1rem;
+}
+
+.stepTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.stepDescription {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #a1a1a6;
+  max-width: 450px;
+}
+
+/* --- Final Summary Card --- */
+.finalSection {
+  background-color: #fff;
+  color: #000;
+  padding: 100px 5%;
+  border-radius: 50px 50px 0 0;
+}
+
+.summaryContent {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.summaryTitle {
+  font-size: 4rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 4rem;
+  letter-spacing: -0.02em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.itineraryList {
+  list-style: none;
+  padding: 0;
+}
+
+.itineraryItem {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: flex-start;
+  font-size: 1.1rem;
+}
+
+.ctaCard {
+  background-color: #f5f5f7;
+  padding: 40px;
+  border-radius: 30px;
+}
+
+.price {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.bookButton {
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 20px;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.bookButton:hover {
+  background-color: #34d399;
+  transform: scale(1.02);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stepSection {
+    flex-direction: column;
+    padding-bottom: 100px;
+  }
+  .imageSide {
+    position: relative;
+    height: 40vh;
+  }
+  .imageWrapper {
+    height: 40vh;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

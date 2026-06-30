@@ -1,0 +1,342 @@
+@keyframes bl-spin {
+  to { transform: rotate(360deg); }
+}
+
+.bannerViewport {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: 64px 48px 0px 48px;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.bannerViewportEmpty {
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .bannerViewport {
+    padding: 64px 24px 0px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bannerViewport {
+    padding: 56px 16px 0px 16px;
+  }
+  
+  .bottomPanelGrid {
+    padding-bottom: 32px;
+    gap: 20px;
+  }
+}
+
+.heroBgLayer {
+  background-position: center;
+  background-size: cover;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: scale(1.05);
+  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1), filter 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -10;
+}
+
+.heroBgActive {
+  filter: brightness(0.65);
+}
+
+.heroBgTransitioning {
+  filter: brightness(0.25) blur(6px);
+  transform: scale(1.03);
+}
+
+.vignetteOverlayRadial {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
+  z-index: -10;
+}
+
+.vignetteOverlayLinear {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 15%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  z-index: -10;
+}
+
+.heroTitleContainer {
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+  max-width: 92vw;
+  z-index: -10;
+}
+
+.heroTitleText {
+  font-size: 12vw;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1), transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.heroTitleActive {
+  opacity: 0.15;
+  transform: scale(1);
+}
+
+.heroTitleTransitioning {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.bottomPanelGrid {
+  width: 100%;
+  padding-bottom: 48px;
+  position: relative;
+  margin-top: auto;
+}
+
+.detailsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 800px;
+}
+
+.metricsRow {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding-bottom: 24px;
+}
+
+.metricNumber {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 480px) {
+  .metricNumber {
+    font-size: 22px;
+  }
+  .metricLabel {
+    font-size: 10px;
+  }
+  .metricsRow {
+    gap: 8px;
+    padding-bottom: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .metricNumber {
+    font-size: 40px;
+  }
+}
+
+.metricLabel {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+@media (min-width: 768px) {
+  .metricLabel {
+    font-size: 14px;
+  }
+}
+
+.actionRow {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Aligns CTA buttons and the Slider Pill side-by-side */
+.interactiveGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 640px) {
+  .interactiveGroup {
+    gap: 24px;
+  }
+}
+
+.ctaButtonGroup {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.btnBookNow {
+  background-color: #ffffff;
+  border-radius: 9999px;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 32px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  transition: background-color 150ms ease;
+}
+
+.btnBookNow:hover {
+  background-color: rgba(255,255,255,0.95);
+}
+
+.arrowCircleBtn {
+  align-items: center;
+  background-color: var(--glass-bg, rgba(15, 15, 15, 0.185));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+  border-radius: 9999px;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  width: 56px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background-color 150ms ease;
+}
+
+.arrowCircleBtn:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* Redesigned to sit as a matching pill inline next to buttons */
+.glassSliderCard {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+  cursor: pointer;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0px 20px;
+  transition: transform 300ms ease, background-color 150ms ease;
+}
+
+.glassSliderCard:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.sliderFooter {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.sliderIndexCounter {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin: 10px;
+}
+
+.progressDotsRow {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+}
+
+@media (max-width: 480px) {
+  .progressDotsRow {
+    gap: 4px;
+  }
+}
+
+/* Bullet Dots Customization */
+.progressDot {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  height: 6px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  flex-shrink: 0;
+}
+
+.progressDot:hover {
+  background-color: rgba(255, 255, 255, 0.55);
+}
+
+.progressDotActive {
+  background-color: #ffffff;
+  width: 32px; /* Balanced active size next to buttons */
+  cursor: default;
+}
+
+.progressDotInactive {
+  width: 12px;
+}
+
+@media (min-width: 640px) {
+  .progressDotActive {
+    width: 40px;
+  }
+  .progressDotInactive {
+    width: 16px;
+  }
+}
+
+.slideDescription {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .slideDescription {
+    font-size: 14px;
+  }
+}
+
+.loaderSpinner {
+  animation: bl-spin 1s linear infinite;
+  border-radius: 50%;
+  border-top-width: 2px;
+  border-top-color: var(--color-accent, #34d399);
+  border-style: solid;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40px;
+}
