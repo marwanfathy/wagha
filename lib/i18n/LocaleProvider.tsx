@@ -39,7 +39,10 @@ function setCookie(name: string, value: string) {
 
 async function fetchTranslations(locale: Locale): Promise<Record<string, string>> {
   try {
-    const res = await fetch(`${API_BASE}/api/public/translations?locale=${locale}`, { credentials: 'include' });
+    const res = await fetch(`${API_BASE}/api/public/translations?locale=${locale}`, {
+      credentials: 'include',
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+    });
     if (!res.ok) return {};
     return await res.json();
   } catch {
