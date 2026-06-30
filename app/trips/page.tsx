@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { publicApi, type Trip, mediaUrl } from '@/lib/api';
 import { SkeletonCard } from '@/components/Skeleton';
+import LazyBackground from '@/components/LazyBackground';
 import Navbar from '../components/Navbar/Navbar';
 import { useLocale } from '@/lib/i18n/LocaleProvider';
 import styles from './TripsPage.module.css';
@@ -42,11 +43,11 @@ export default function TripsPage() {
                 href={`/trips/${trip.slug}`}
                 className={styles.card}
               >
-                <div className={styles.cardImageWrap} style={{ background: `url(${imageUrl(trip)}) center/cover` }}>
+                <LazyBackground src={imageUrl(trip)} className={styles.cardImageWrap} style={{ backgroundPosition: 'center', backgroundSize: 'cover' }}>
                   <div className={styles.cardCountryBadge} style={{ color: trip.primaryColor }}>
                     {trip.country}
                   </div>
-                </div>
+                </LazyBackground>
                 <div className={styles.cardBody}>
                   <h3 className={styles.cardTitle}>{trip.title}</h3>
                   <p className={styles.cardDescription}>{trip.description}</p>

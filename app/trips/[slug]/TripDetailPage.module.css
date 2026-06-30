@@ -181,11 +181,14 @@
 
 .stepImage {
   height: 280px;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 280px;
 }
 
 @media (max-width: 768px) {
   .stepImage {
     height: 200px;
+    contain-intrinsic-size: 1px 200px;
   }
 }
 

@@ -85,7 +85,7 @@ export default function SinaiJourney({ tripSlug }: Props) {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
             >
-              <img src={mediaUrl(step.image)} alt={step.title} className={styles.stepImage} />
+              <img src={mediaUrl(step.image)} alt={step.title} className={styles.stepImage} loading="lazy" decoding="async" />
             </motion.div>
           </div>
           <div className={styles.textSide}>

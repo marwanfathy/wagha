@@ -43,6 +43,8 @@
   min-height: 100vh;
   padding: 0 5%;
   gap: 4rem;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
 }
 
 .imageSide {

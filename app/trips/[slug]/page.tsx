@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { publicApi, type Trip, mediaUrl } from '@/lib/api';
 import { ArrowRight, CheckCircle, Lock } from 'lucide-react';
 import { SkeletonBanner, SkeletonText, SkeletonBlock } from '@/components/Skeleton';
+import LazyBackground from '@/components/LazyBackground';
 import Navbar from '../../components/Navbar/Navbar';
 import { useLocale } from '@/lib/i18n/LocaleProvider';
 import styles from './TripDetailPage.module.css';
@@ -104,7 +105,7 @@ export default function TripDetailPage() {
             <div className={styles.programGrid}>
               {trip.steps.map((step) => (
                 <div key={step.id} className={styles.stepCard}>
-                  <div className={styles.stepImage} style={{ background: `url(${mediaUrl(step.image)}) center/cover` }} />
+                  <LazyBackground src={mediaUrl(step.image)} className={styles.stepImage} style={{ backgroundPosition: 'center', backgroundSize: 'cover' }} />
                   <div className={styles.stepText}>
                     <span className={styles.stepDay}>{t('trip.day', { n: step.day })}</span>
                     <h3 className={styles.stepTitle}>{step.title}</h3>
