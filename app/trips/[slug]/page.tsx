@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { publicApi, type Trip, mediaUrl } from '@/lib/api';
+import { publicApi, setAccessToken, type Trip, mediaUrl } from '@/lib/api';
 import { ArrowRight, CheckCircle, Lock } from 'lucide-react';
 import { SkeletonBanner, SkeletonText, SkeletonBlock } from '@/components/Skeleton';
 import LazyBackground from '@/components/LazyBackground';
@@ -21,7 +21,8 @@ export default function TripDetailPage() {
   useEffect(() => {
     (async () => {
       try {
-        await publicApi.refresh();
+        const result = await publicApi.refresh();
+        setAccessToken(result.accessToken);
         setIsLoggedIn(true);
       } catch {
         setIsLoggedIn(false);

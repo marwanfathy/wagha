@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import Navbar from '../components/Navbar/Navbar';
@@ -10,7 +10,16 @@ import { useLocale } from '@/lib/i18n/LocaleProvider';
 import styles from '../styles/auth.module.css';
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { t } = useLocale();
 
   const [username, setUsername] = useState('');
@@ -27,7 +36,7 @@ export default function LoginPage() {
     try {
       const result = await publicApi.login({ identifier: username, password });
       setAccessToken(result.accessToken);
-      router.push('/');
+      router.push(searchParams.get('redirect') || '/');
     } catch (err) {
       const message = err instanceof ApiRequestError ? err.message : t('login.errorGeneric');
       setError(message);

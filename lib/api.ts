@@ -32,6 +32,35 @@ export class ApiRequestError extends Error {
 }
 
 let accessToken: string | null = null;
+let pendingRefresh: Promise<string | null> | null = null;
+
+async function refreshAccessToken(): Promise<string | null> {
+  if (pendingRefresh) return pendingRefresh;
+
+  pendingRefresh = (async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/refresh`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!response.ok) {
+        accessToken = null;
+        return null;
+      }
+      const data = await response.json();
+      accessToken = data.accessToken;
+      return data.accessToken;
+    } catch {
+      accessToken = null;
+      return null;
+    } finally {
+      pendingRefresh = null;
+    }
+  })();
+
+  return pendingRefresh;
+}
 
 export function setAccessToken(token: string | null) {
   accessToken = token;
@@ -54,23 +83,12 @@ function buildQueryString(query?: RequestOptions['query']): string {
   return qs ? `?${qs}` : '';
 }
 
-async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+async function fetchWithAuth<T>(path: string, options: RequestOptions, token: string | null): Promise<T> {
   const { method = 'GET', body, query, skipAuth } = options;
 
-  const cacheKey = `${path}${buildQueryString(query)}`;
-  if (method === 'GET') {
-    const cached = apiCache.get(cacheKey);
-    if (cached && Date.now() < cached.expiry) {
-      return cached.data as T;
-    }
-  }
-
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    'ngrok-skip-browser-warning': 'true',
-  };
-  if (accessToken && !skipAuth) {
-    headers.Authorization = `Bearer ${accessToken}`;
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (token && !skipAuth) {
+    headers.Authorization = `Bearer ${token}`;
   }
 
   const response = await fetch(`${API_BASE_URL}${path}${buildQueryString(query)}`, {
@@ -96,14 +114,39 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     throw new ApiRequestError(result?.message || `Request failed (${response.status})`, response.status);
   }
 
+  return result;
+}
+
+async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  const { method = 'GET', query } = options;
+
+  const cacheKey = `${path}${buildQueryString(query)}`;
   if (method === 'GET') {
-    apiCache.set(cacheKey, {
-      data: result,
-      expiry: Date.now() + CACHE_TTL,
-    });
+    const cached = apiCache.get(cacheKey);
+    if (cached && Date.now() < cached.expiry) {
+      return cached.data as T;
+    }
   }
 
-  return result;
+  try {
+    const result = await fetchWithAuth<T>(path, options, accessToken);
+    if (method === 'GET') {
+      apiCache.set(cacheKey, { data: result, expiry: Date.now() + CACHE_TTL });
+    }
+    return result;
+  } catch (err) {
+    if (err instanceof ApiRequestError && err.status === 401 && accessToken && !options.skipAuth) {
+      const newToken = await refreshAccessToken();
+      if (newToken) {
+        const result = await fetchWithAuth<T>(path, options, newToken);
+        if (method === 'GET') {
+          apiCache.set(cacheKey, { data: result, expiry: Date.now() + CACHE_TTL });
+        }
+        return result;
+      }
+    }
+    throw err;
+  }
 }
 
 export function clearApiCache() {
@@ -282,11 +325,39 @@ export const paymentsApi = {
   }) => request<Payment>('/api/payments/proof', { method: 'POST', body: input }),
 };
 
+async function uploadToBackend(path: string, file: File, ticket?: string): Promise<{ url: string }> {
+  const formData = new FormData();
+  formData.append('file', file);
+  if (ticket) formData.append('ticket', ticket);
+
+  let token = accessToken;
+  if (!token) {
+    token = await refreshAccessToken();
+  }
+
+  const doUpload = async (tok: string | null): Promise<Response> => {
+    const headers: Record<string, string> = {};
+    if (tok) headers.Authorization = `Bearer ${tok}`;
+    return fetch(`${API_BASE_URL}${path}`, { method: 'POST', headers, body: formData });
+  };
+
+  let response = await doUpload(token);
+
+  if (response.status === 401 && token) {
+    const newToken = await refreshAccessToken();
+    if (newToken) response = await doUpload(newToken);
+  }
+
+  const result = await response.json();
+  if (!response.ok) throw new ApiRequestError(result.message || 'Upload failed', response.status);
+  return result;
+}
+
 export const mediaApi = {
   uploadHeroMedia: (file: File, ticket?: string) => uploadToMediaServer('/api/upload-hero-media', 'media', file, ticket),
   uploadStory: (file: File, ticket?: string) => uploadToMediaServer('/api/upload-story', 'media', file, ticket),
-  uploadProductImage: (file: File, ticket?: string) => uploadToMediaServer('/api/upload-product-image', 'media', file, ticket),
-  uploadIdPhoto: (file: File, ticket?: string) => uploadToMediaServer('/api/upload-id-photo', 'media', file, ticket),
+  uploadProductImage: (file: File, ticket?: string) => uploadToBackend('/api/media/product-image', file, ticket),
+  uploadIdPhoto: (file: File, ticket?: string) => uploadToBackend('/api/media/id-photo', file, ticket),
   deleteMedia: (filePath: string, key?: string) =>
     fetch(`${MEDIA_BASE_URL}/api/delete`, {
       method: 'POST',
